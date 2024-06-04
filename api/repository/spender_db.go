@@ -11,17 +11,11 @@ func NewSpenderRepository(db *sql.DB) SpenderRepository {
 }
 
 func (r spenderRepository) Create(s Spender) (*Spender, error) {
-	query := `INSERT INTO spender (name,email) VALUES ($1,$2)`
-	result, err := r.db.Exec(query, s.Name, s.Email)
+	query := `INSERT INTO spender (name,email) VALUES ($1,$2) RETURNING id`
+	err := r.db.QueryRow(query, s.Name, s.Email).Scan(&s.ID)
 	if err != nil {
 		return nil, err
 	}
-	id, err := result.LastInsertId()
-	if err != nil {
-		return nil, err
-	}
-	s.ID = int(id)
-
 	return &s, nil
 }
 

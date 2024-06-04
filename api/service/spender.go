@@ -1,14 +1,14 @@
 package service
 
 type NewSpenderRequest struct {
-	Name  string
-	Email string
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
 
 type SpenderResponse struct {
-	ID    int
-	Name  string
-	Email string
+	ID    int    `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
 
 type SpenderService interface {
